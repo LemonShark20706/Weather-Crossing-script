@@ -35,18 +35,38 @@ def get_date_string() -> str:
     """
     Asks the user for a month and year, then returns a date string in the format YYYY-MM-DD to YYYY-MM-DD.
     """
-    print("Enter the month and year for which you want the data:")
-    month: int = int(input("Month (1-12): "))
-    year: int = int(input("Year (e.g., 2023): "))
-    if 1 <= month <= 12:
-        first_day, last_day = get_first_and_last_day_of_month(month, year)
-        start_date: str = f"{year}-{month:02d}-{first_day:02d}"
-        end_date: str = f"{year}-{month:02d}-{last_day:02d}"
-        return f"{start_date}/{end_date}"
-    else:
-        print("Invalid month. Please enter a value between 1 and 12.")
-    
-    return ""
+    print("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day")
+    while True:
+        option: int = int(input("Choose an option (1-3): "))
+        match option:
+            case 1:
+                print("Enter the year for which you want the data:")
+                year: int = int(input("Year (e.g., 2023): "))
+                start_date: str = f"{year}-01-01"
+                end_date: str = f"{year}-12-31"
+                return f"{start_date}/{end_date}"
+
+            case 2:
+                print("Enter the month and year for which you want the data:")
+                month: int = int(input("Month (1-12): "))
+                year: int = int(input("Year (e.g., 2023): "))
+                if 1 <= month <= 12:
+                    first_day, last_day = get_first_and_last_day_of_month(month, year)
+                    start_date: str = f"{year}-{month:02d}-{first_day:02d}"
+                    end_date: str = f"{year}-{month:02d}-{last_day:02d}"
+                    return f"{start_date}/{end_date}"
+                else:
+                    print("Invalid month. Please enter a value between 1 and 12.")
+
+            case 3:
+                print("Enter the date for which you want the data:")
+                year: int = int(input("Year (e.g., 2023): "))
+                month: int = int(input("Month (1-12): "))
+                day: int = int(input("Day (1-31): "))
+                start_date: str = f"{year}-{month:02d}-{day:02d}"
+                return start_date
+            case _:
+                print("Invalid option. Please choose a valid option (1-3).")
 
 def fetch_api_url() -> str:
     """
