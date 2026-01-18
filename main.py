@@ -131,7 +131,7 @@ def create_file_with_data(data: dict) -> None:
     Args:
         data (dict): The data to be written to the file.
     """
-    with open("output.json", "w") as file:
+    with open("weather_data_response.json", "w") as file:
         file.write(str(data).replace('\'', '"'))
 
 data = fetch_api()
