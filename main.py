@@ -35,13 +35,13 @@ def get_date_string() -> str:
     """
     Asks the user for a month and year, then returns a date string in the format YYYY-MM-DD to YYYY-MM-DD.
     """
-    print("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day")
+    print("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day\n4)- Year to year range\n5)- Month to month range\n6)- Day to day range")
     while True:
-        option: int = int(input("Choose an option (1-3): "))
+        option: int = int(input("Choose an option (1-6): "))
         match option:
             case 1:
                 print("Enter the year for which you want the data:")
-                year: int = int(input("Year (e.g., 2023): "))
+                year: int = int(input("Year (e.g., 2026): "))
                 start_date: str = f"{year}-01-01"
                 end_date: str = f"{year}-12-31"
                 return f"{start_date}/{end_date}"
@@ -49,7 +49,7 @@ def get_date_string() -> str:
             case 2:
                 print("Enter the month and year for which you want the data:")
                 month: int = int(input("Month (1-12): "))
-                year: int = int(input("Year (e.g., 2023): "))
+                year: int = int(input("Year (e.g., 2026): "))
                 if 1 <= month <= 12:
                     first_day, last_day = get_first_and_last_day_of_month(month, year)
                     start_date: str = f"{year}-{month:02d}-{first_day:02d}"
@@ -60,13 +60,47 @@ def get_date_string() -> str:
 
             case 3:
                 print("Enter the date for which you want the data:")
-                year: int = int(input("Year (e.g., 2023): "))
+                year: int = int(input("Year (e.g., 2026): "))
                 month: int = int(input("Month (1-12): "))
                 day: int = int(input("Day (1-31): "))
                 start_date: str = f"{year}-{month:02d}-{day:02d}"
                 return start_date
+            
+            case 4:
+                print("Enter the year range for which you want the data:")
+                start_year: int = int(input("Start Year (e.g., 2026): "))
+                end_year: int = int(input("End Year (e.g., 2026): "))
+                start_date: str = f"{start_year}-01-01"
+                end_date: str = f"{end_year}-12-31"
+                print(f"Debug: start_date={start_date}, end_date={end_date}")
+                return f"{start_date}/{end_date}"
+
+            case 5:
+                print("Enter the month range for which you want the data:")
+                start_month: int = int(input("Start Month (1-12): "))
+                start_year: int = int(input("Start Year (e.g., 2026): "))
+                end_month: int = int(input("End Month (1-12): "))
+                end_year: int = int(input("End Year (e.g., 2026): "))
+                start_date: str = f"{start_year}-{start_month:02d}-01"
+                end_date: str = f"{end_year}-{end_month:02d}-{get_first_and_last_day_of_month(end_month, end_year)[1]:02d}"
+                print(f"Debug: start_date={start_date}, end_date={end_date}")
+                return f"{start_date}/{end_date}"
+
+            case 6:
+                print("Enter the day range for which you want the data:")
+                start_year: int = int(input("Start Year (e.g., 2026): "))
+                start_month: int = int(input("Start Month (1-12): "))
+                start_day: int = int(input("Start Day (1-31): "))
+                end_year: int = int(input("End Year (e.g., 2026): "))
+                end_month: int = int(input("End Month (1-12): "))
+                end_day: int = int(input("End Day (1-31): "))
+                start_date: str = f"{start_year}-{start_month:02d}-{start_day:02d}"
+                end_date: str = f"{end_year}-{end_month:02d}-{end_day:02d}"
+                print(f"Debug: start_date={start_date}, end_date={end_date}")
+                return f"{start_date}/{end_date}"
+
             case _:
-                print("Invalid option. Please choose a valid option (1-3).")
+                print("Invalid option. Please choose a valid option (1-6).")
 
 def fetch_api_url() -> str:
     """
