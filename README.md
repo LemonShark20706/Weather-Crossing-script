@@ -18,7 +18,7 @@ This script allows users to fetch historical weather data for a specified locati
 
 3. Install the required dependencies:
     ```bash
-    pip install requests python-dotenv
+    pip install requests python-dotenv colorama
     ```
 
 4. Set up your Visual Crossing Weather API key:
@@ -53,6 +53,7 @@ This script allows users to fetch historical weather data for a specified locati
 - Python 3.x
 - requests library
 - calendar library
+- colorama library
 - dotenv library
 - os library
 
