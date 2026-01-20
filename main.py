@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import requests
 import calendar
 import os
-load_dotenv('.env')
 
 def cordinates_to_string() -> str:
     """
@@ -26,7 +25,6 @@ def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
     Returns:
         tuple: A tuple containing the first and last day of the month.
     """
-
     first_day:int = 1
     last_day = calendar.monthrange(year, month)[1]
     return (first_day, last_day)
@@ -170,7 +168,6 @@ def fetch_api() -> dict:
     """
     Fetches data from the API based on user input and environment variables.
     """
-    
     url: str = f"{fetch_api_url()}{cordinates_to_string()}/{get_date_string()}?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -188,5 +185,6 @@ def create_file_with_data(data: dict) -> None:
     with open("weather_data_response.json", "w") as file:
         file.write(str(data).replace('\'', '"'))
 
+load_dotenv('.env')
 data = fetch_api()
 create_file_with_data(data)
