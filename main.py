@@ -125,16 +125,19 @@ class ConsolColor:
         finalColorEnd = f"{Style.RESET_ALL}"
         return finalColorEnd    
 
-def cordinates_to_string() -> str:
+def cordinates_to_string() -> str | None:
     """
     Asks for a longitude and latitude from the user and returns them as a formatted string.
 
     Returns:
         str: A string representation of the coordinates in the format. (x,y)
     """
-    longitude:str = input(ConsolColor.PreSetUpColoredTextLine("Enter the longitude: ", "info"))
-    latitude:str = input(ConsolColor.PreSetUpColoredTextLine("Enter the latitude: ", "info"))
-    return f"{longitude},{latitude}"
+    try:
+        longitude:float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter the longitude: ", "info")))
+        latitude:float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter the latitude: ", "info")))
+        return f"{longitude},{latitude}"
+    except ValueError:
+        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter numeric values for longitude and latitude.", "warning"))
 
 def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
     """
