@@ -100,6 +100,12 @@ def get_date_string() -> str:
             case _:
                 print("Invalid option. Please choose a valid option (1-6).")
 
+def load_environment_variables() -> None:
+    """
+    Loads environment variables from a .env file.
+    """
+    load_dotenv('.env')
+
 def fetch_api_url() -> str:
     """
     Fetches the API URL from environment variables.
@@ -168,6 +174,7 @@ def fetch_api() -> dict:
     """
     Fetches data from the API based on user input and environment variables.
     """
+    load_environment_variables()
     url: str = f"{fetch_api_url()}{cordinates_to_string()}/{get_date_string()}?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -185,6 +192,4 @@ def create_file_with_data(data: dict) -> None:
     with open("weather_data_response.json", "w") as file:
         file.write(str(data).replace('\'', '"'))
 
-load_dotenv('.env')
-data = fetch_api()
-create_file_with_data(data)
+create_file_with_data(fetch_api())
