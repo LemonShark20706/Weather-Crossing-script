@@ -132,8 +132,8 @@ def cordinates_to_string() -> str:
     Returns:
         str: A string representation of the coordinates in the format. (x,y)
     """
-    longitude:str = input("Enter the longitude: ")
-    latitude:str = input("Enter the latitude: ")
+    longitude:str = input(ConsolColor.PreSetUpColoredTextLine("Enter the longitude: ", "info"))
+    latitude:str = input(ConsolColor.PreSetUpColoredTextLine("Enter the latitude: ", "info"))
     return f"{longitude},{latitude}"
 
 def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
@@ -155,21 +155,21 @@ def get_date_string() -> str:
     """
     Asks the user for a month and year, then returns a date string in the format YYYY-MM-DD to YYYY-MM-DD.
     """
-    print("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day\n4)- Year to year range\n5)- Month to month range\n6)- Day to day range")
+    print(ConsolColor.PreSetUpColoredTextLine("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day\n4)- Year to year range\n5)- Month to month range\n6)- Day to day range", "s_color"))
     while True:
-        option: int = int(input("Choose an option (1-6): "))
+        option: int = int(input(ConsolColor.PreSetUpColoredTextLine("Choose an option (1-6): ", "info")))
         match option:
             case 1:
-                print("Enter the year for which you want the data:")
-                year: int = int(input("Year (e.g., 2026): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the year for which you want the data:", "s_color"))
+                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
                 start_date: str = f"{year}-01-01"
                 end_date: str = f"{year}-12-31"
                 return f"{start_date}/{end_date}"
 
             case 2:
-                print("Enter the month and year for which you want the data:")
-                month: int = int(input("Month (1-12): "))
-                year: int = int(input("Year (e.g., 2026): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the month and year for which you want the data:", "s_color"))
+                month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Month (1-12): ", "info")))
+                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
                 if 1 <= month <= 12:
                     first_day, last_day = get_first_and_last_day_of_month(month, year)
                     start_date: str = f"{year}-{month:02d}-{first_day:02d}"
@@ -179,48 +179,45 @@ def get_date_string() -> str:
                     print("Invalid month. Please enter a value between 1 and 12.")
 
             case 3:
-                print("Enter the date for which you want the data:")
-                year: int = int(input("Year (e.g., 2026): "))
-                month: int = int(input("Month (1-12): "))
-                day: int = int(input("Day (1-31): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the date for which you want the data:", "s_color"))
+                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
+                month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Month (1-12): ", "info")))
+                day: int = int(input(ConsolColor.PreSetUpColoredTextLine("Day (1-31): ", "info")))
                 start_date: str = f"{year}-{month:02d}-{day:02d}"
                 return start_date
             
             case 4:
-                print("Enter the year range for which you want the data:")
-                start_year: int = int(input("Start Year (e.g., 2026): "))
-                end_year: int = int(input("End Year (e.g., 2026): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the year range for which you want the data:", "s_color"))
+                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
+                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
                 start_date: str = f"{start_year}-01-01"
                 end_date: str = f"{end_year}-12-31"
-                print(f"Debug: start_date={start_date}, end_date={end_date}")
                 return f"{start_date}/{end_date}"
 
             case 5:
-                print("Enter the month range for which you want the data:")
-                start_month: int = int(input("Start Month (1-12): "))
-                start_year: int = int(input("Start Year (e.g., 2026): "))
-                end_month: int = int(input("End Month (1-12): "))
-                end_year: int = int(input("End Year (e.g., 2026): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the month range for which you want the data:", "s_color"))
+                start_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Month (1-12): ", "info")))
+                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
+                end_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Month (1-12): ", "info")))
+                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
                 start_date: str = f"{start_year}-{start_month:02d}-01"
                 end_date: str = f"{end_year}-{end_month:02d}-{get_first_and_last_day_of_month(end_month, end_year)[1]:02d}"
-                print(f"Debug: start_date={start_date}, end_date={end_date}")
                 return f"{start_date}/{end_date}"
 
             case 6:
-                print("Enter the day range for which you want the data:")
-                start_year: int = int(input("Start Year (e.g., 2026): "))
-                start_month: int = int(input("Start Month (1-12): "))
-                start_day: int = int(input("Start Day (1-31): "))
-                end_year: int = int(input("End Year (e.g., 2026): "))
-                end_month: int = int(input("End Month (1-12): "))
-                end_day: int = int(input("End Day (1-31): "))
+                print(ConsolColor.PreSetUpColoredTextLine("Enter the day range for which you want the data:", "s_color"))
+                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
+                start_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Month (1-12): ", "info")))
+                start_day: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Day (1-31): ", "info")))
+                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
+                end_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Month (1-12): ", "info")))
+                end_day: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Day (1-31): ", "info")))
                 start_date: str = f"{start_year}-{start_month:02d}-{start_day:02d}"
                 end_date: str = f"{end_year}-{end_month:02d}-{end_day:02d}"
-                print(f"Debug: start_date={start_date}, end_date={end_date}")
                 return f"{start_date}/{end_date}"
 
             case _:
-                print("Invalid option. Please choose a valid option (1-6).")
+                print(ConsolColor.PreSetUpColoredTextLine("Invalid option. Please choose a valid option (1-6).", "warning"))
 
 def load_environment_variables() -> None:
     """
@@ -254,12 +251,12 @@ def fecth_needed_infos() -> list[str]:
         tuple: A tuple containing the coordinates string, API URL, and API key.
     """
     option_list: list[str] = ["datetime","temp","tempmax","tempmin","dew","humidity","precip","windgust","windspeed","cloudcover","solarradiation","solarenergy","uvindex","visibility"]
-    print("What do you need from the list:")
+    print(ConsolColor.PreSetUpColoredTextLine("What do you need from the list:", "s_color"))
     for optionIndex in range(len(option_list)):
-        print(f"\t{optionIndex+1})- {option_list[optionIndex]}")
-    print("Type the numbers of the options you need separated by commas (e.g., 1,3,5) or type all if you need all. If you want to leave press enter.:")
+        print(ConsolColor.PreSetUpColoredTextLine(f"\t{optionIndex+1})- {option_list[optionIndex]}", "s_color"))
+    print(ConsolColor.PreSetUpColoredTextLine("Type the numbers of the options you need separated by commas (e.g., 1,3,5) or type all if you need all. If you want to leave press enter.:", "s_color"))
     
-    user_input: str = input()
+    user_input: str = input(ConsolColor.PreSetUpColoredTextLine("?.: ", "info"))
     if user_input.lower() == "all":
         return option_list
     elif user_input == "":
@@ -275,7 +272,7 @@ def fecth_needed_infos() -> list[str]:
                     raise ValueError
             return selected_options
         except ValueError:
-            print("Invalid input. Please enter valid option numbers separated by commas, 'all', or press enter to leave:")
+            print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter valid option numbers separated by commas, 'all', or press enter to leave:", "warning"))
 
     return [""]
 
@@ -286,11 +283,11 @@ def get_unitGroup() -> str | None:
     Returns:
         str: The unit group chosen by the user.
     """
-    unit_group: str = input("Enter the unit group (metric/imperial): ").strip().lower()
+    unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "info")).strip().lower()
     if unit_group in ["metric", "imperial"]:
         return unit_group
     else:
-        print("Invalid input. Please enter 'metric' or 'imperial'.")
+        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter 'metric' or 'imperial'.", "warning"))
 
 def fetch_api() -> dict:
     """
@@ -302,7 +299,7 @@ def fetch_api() -> dict:
     if response.status_code == 200:
         return response.json()
     else:
-        raise Exception(f"API request failed with status code {response.status_code}")
+        raise Exception(ConsolColor.PreSetUpColoredTextLine(f"API request failed with status code {response.status_code}", "danger"))
 
 def create_file_with_data(data: dict) -> None:
     """
