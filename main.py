@@ -314,4 +314,26 @@ def create_file_with_data(data: dict) -> None:
     with open("weather_data_response.json", "w") as file:
         file.write(str(data).replace('\'', '"'))
 
-create_file_with_data(fetch_api())
+def main() -> None:
+    """
+    Main function to execute the program.
+    """
+    print("Data fetching is in progress...")
+    data: dict = fetch_api()
+    create_file_with_data(data)
+    print("The data has been fetched and saved to 'weather_data_response.json'.")
+
+    print("Do you want a report about the fetched data? (yes/no)")
+    report_choice: str = input(ConsolColor.PreSetUpColoredTextLine("?.: ", "info")).strip().lower()
+    if report_choice == "no":
+        print("Exiting the program.")
+        return
+    
+    days_data: list[dict] = data.get("days", [])
+    for day in days_data:
+        print(ConsolColor.PreSetUpColoredTextLine(f"Date: {day.get('datetime', 'N/A')}", "s_color"))
+        for key, value in day.items():
+            if key != "datetime":
+                print(ConsolColor.PreSetUpColoredTextLine(f"  {key}: {value}", "i_tips"))
+
+main()
