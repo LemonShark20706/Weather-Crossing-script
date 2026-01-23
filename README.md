@@ -47,6 +47,10 @@ This script allows users to fetch historical weather data for a specified locati
 - Data export option (JSON)
 - Supports different units (metric/imperial)
 - Easy-to-use interface
+- Color-coded terminal output
+- Data validation and error handling
+- Logging functionality
+- User-friendly prompts
 - PDF report generation
 
 ------
