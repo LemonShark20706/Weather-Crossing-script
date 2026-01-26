@@ -156,7 +156,7 @@ def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
     last_day = calendar.monthrange(year, month)[1]
     return (first_day, last_day)
 
-def get_date_string() -> str:
+def get_date_string() -> str | None:
     """
     Asks the user for a month and year, then returns a date string in the format YYYY-MM-DD to YYYY-MM-DD.
     """
