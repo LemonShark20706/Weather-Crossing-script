@@ -5,6 +5,10 @@ It provides functions to fetch weather data from a API. It uses the Visual Cross
 This script allows users to fetch historical weather data for a specified location and date range using the Visual Crossing Weather API. It supports various weather parameters such as temperature, humidity, wind speed, and precipitation. The script is designed to be user-friendly and customizable, allowing users to specify their desired location, date range, and weather parameters. The fetched data is exported in JSON format for further analysis. For now this works for a hole month at a time. But upgrades are planned to support custom date ranges in the future or more export formats. More analysis features are also planned for future updates. Please refer to the installation instructions below to set up and run the script and note that this API may have usage limits based on your subscription plan.
 
 ---
+## Version
+- 0.0.1 -> Initial release with basic functionality to fetch and export weather data for a specified location and date range.
+
+---
 ## Installation
 1. Clone the repository:
    ```bash
