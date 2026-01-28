@@ -196,6 +196,15 @@ class date:
     def __str__(self) -> str:
         return f"{self.year}-{self.month}-{self.day}"
 
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start: float = time.time()
+        result = func(*args, **kwargs)
+        end: float = time.time()
+        print(f"Took {end-start:.8f} second\n\n")
+        return result
+    return wrapper
+
 def cordinates_to_string() -> str | None:
     """
     Asks for a longitude and latitude from the user and returns them as a formatted string.
