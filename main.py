@@ -339,6 +339,23 @@ def load_env_variable(variable_name: str) -> str:
     finally:
         print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} variable loading attempt completed.","s_color"))
 
+@timer
+def create_json_log_file(data: dict):
+    print(ConsolColor.PreSetUpColoredTextLine(f"Creating .json file for logging.", "i_tips"))
+
+    try:
+        with open("weather_data_response.json", "w") as file:
+            file.write(str(data).replace('\'', '"'))
+    
+    except Exception as e:
+        print(ConsolColor.PreSetUpColoredTextLine(f"File had problem: {e}","danger"))
+
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine(f"File created successfully.", "success"))
+
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine(f"weather_data_response.json file creating attempt completed.","s_color"))
+
 def fetch_api() -> dict:
     """
     Fetches data from the API based on user input and environment variables.
@@ -350,16 +367,6 @@ def fetch_api() -> dict:
         return response.json()
     else:
         raise Exception(ConsolColor.PreSetUpColoredTextLine(f"API request failed with status code {response.status_code}", "danger"))
-
-def create_file_with_data(data: dict) -> None:
-    """
-    Creates a file and writes the provided data into it.
-
-    Args:
-        data (dict): The data to be written to the file.
-    """
-    with open("weather_data_response.json", "w") as file:
-        file.write(str(data).replace('\'', '"'))
 
 def create_pdf_report(data: dict) -> None:
     """
