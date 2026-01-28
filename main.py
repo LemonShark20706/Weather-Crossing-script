@@ -361,12 +361,22 @@ def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end
     load_environment_variables()
     url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_params)}"
     print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
-    response = requests.get(url)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            raise Exception(f"API request failed with status code {response.status_code}")
+
+    except Exception as e:
+        print(ConsolColor.PreSetUpColoredTextLine(f"API request failed: {e}", "danger"))
+        return {}
+
+    else:
         print(ConsolColor.PreSetUpColoredTextLine(f"API responded successfully.", "success"))
         return response.json()
-    else:
-        raise Exception(ConsolColor.PreSetUpColoredTextLine(f"API request failed with status code {response.status_code}", "danger"))
+
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine(f"API request attempt completed.","s_color"))
 
 def create_pdf_report(data: dict) -> None:
     """
