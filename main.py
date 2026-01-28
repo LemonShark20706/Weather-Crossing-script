@@ -246,6 +246,24 @@ def ask_for_date() -> date | None:
     finally:
         print(ConsolColor.PreSetUpColoredTextLine("Date input attempt completed.", "info"))
 
+@timer
+def ask_for_unitGroup():
+    try:
+        unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "s_color")).strip().lower()
+
+        if unit_group not in ["metric", "imperial"]:
+            raise ValueError("Unit group must be metric or imperial.")
+
+    except ValueError as ve:
+        print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
+        return None
+
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine("Unit group is successfully created.", "success"))
+        return unit_group
+
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine("Unit group input attempt completed.", "info"))
 
 def load_environment_variables() -> None:
     """
@@ -304,25 +322,13 @@ def fecth_needed_infos() -> list[str]:
 
     return [""]
 
-def get_unitGroup() -> str | None:
-    """
-    Asks the user for their preferred unit group (metric or imperial).
-
-    Returns:
-        str: The unit group chosen by the user.
-    """
-    unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "info")).strip().lower()
-    if unit_group in ["metric", "imperial"]:
-        return unit_group
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter 'metric' or 'imperial'.", "warning"))
 
 def fetch_api() -> dict:
     """
     Fetches data from the API based on user input and environment variables.
     """
     load_environment_variables()
-    url: str = f"{fetch_api_url()}/?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
+    url: str = f"{fetch_api_url()}/?key={fetch_api_key()}&include=days&unitGroup=&elements={','.join(fecth_needed_infos())}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
