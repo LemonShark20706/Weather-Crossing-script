@@ -321,6 +321,7 @@ def load_environment_variables(file_path: str = ".env"):
     finally:
         print(ConsolColor.PreSetUpColoredTextLine(f"{file_path} file loading attempt completed.","s_color"))
 
+@timer
 def load_env_variable(variable_name: str) -> str:
     print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment variables: {variable_name}", "i_tips"))
     env_variable: str
