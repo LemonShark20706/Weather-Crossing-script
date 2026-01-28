@@ -378,4 +378,14 @@ def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end
     finally:
         print(ConsolColor.PreSetUpColoredTextLine(f"API request attempt completed.","s_color"))
 
-create_json_log_file(fetch_api())
+def main():
+    while True:
+        create_json_log_file(fetch_api())
+
+        can_go = input(ConsolColor.PreSetUpColoredTextLine("Do you want to fech more data from the API? (yes | no)\n?.:", "s_color")).strip().lower()
+
+        if can_go == "no":
+            break
+
+
+main()
