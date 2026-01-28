@@ -205,19 +205,22 @@ def timer(func):
         return result
     return wrapper
 
-def cordinates_to_string() -> str | None:
-    """
-    Asks for a longitude and latitude from the user and returns them as a formatted string.
-
-    Returns:
-        str: A string representation of the coordinates in the format. (x,y)
-    """
+@timer
+def ask_for_cordinate() -> coordinate | None:
     try:
-        longitude:float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter the longitude: ", "info")))
-        latitude:float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter the latitude: ", "info")))
-        return f"{longitude},{latitude}"
+        lon: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter longitude: ", "s_color")))
+        lat: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter latitude: ", "s_color")))
+
     except ValueError:
-        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter numeric values for longitude and latitude.", "warning"))
+        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter numeric values for longitude and latitude.", "danger"))
+        return None
+
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine("Cordinate successfully created.", "success"))
+        return coordinate(lon, lat)
+
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine("Cordinate input attempt completed.", "info"))
 
 def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
     """
@@ -377,7 +380,7 @@ def fetch_api() -> dict:
     Fetches data from the API based on user input and environment variables.
     """
     load_environment_variables()
-    url: str = f"{fetch_api_url()}{cordinates_to_string()}/{get_date_string()}?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
+    url: str = f"{fetch_api_url()}/{get_date_string()}?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
