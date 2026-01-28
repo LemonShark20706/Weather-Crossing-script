@@ -131,6 +131,37 @@ class ConsolColor:
         finalColorEnd = f"{Style.RESET_ALL}"
         return finalColorEnd   
 
+class coordinate:
+    def __init__(self, longitude: float, latitude: float) -> None:
+        self.x: float = longitude
+        self.y: float = latitude
+    
+    #region getters
+    def get_full_cordinate(self) -> tuple[float, float]:
+        return (self.x, self.y)
+
+    def get_longitude(self) -> float:
+        return self.x
+    
+    def get_latitude(self) -> float:
+        return self.y
+    #endregion
+
+    #region setters
+    def set_longitude(self, longitude: float) -> None:
+        self.x = longitude
+    
+    def set_latitude(self, latitude: float) -> None:
+        self.y = latitude
+    
+    def set_cordinate(self, longitude: float, latitude: float) -> None:
+        self.x = longitude
+        self.y = latitude
+    #endregion
+
+    def __str__(self) -> str:
+        return f"{self.x},{self.y}"
+
 def cordinates_to_string() -> str | None:
     """
     Asks for a longitude and latitude from the user and returns them as a formatted string.
