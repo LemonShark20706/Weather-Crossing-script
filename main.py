@@ -162,6 +162,40 @@ class coordinate:
     def __str__(self) -> str:
         return f"{self.x},{self.y}"
 
+class date:
+    def __init__(self, year: int, month: int, day: int) -> None:
+        self.year: int = year
+        self.month: int = month
+        self.day: int = day
+    
+    #region getters
+    def get_year(self) -> int:
+        return self.year
+    
+    def get_month(self) -> int:
+        return self.month
+    
+    def get_day(self) -> int:
+        return self.day
+    
+    def get_last_day_of_month(self) -> int:
+        return calendar.monthrange(self.year, self.month)[1]
+    #endregion
+
+    #region setters
+    def set_year(self, year: int) -> None:
+        self.year = year
+    
+    def set_month(self, month: int) -> None:
+        self.month = month
+    
+    def set_day(self, day: int) -> None:
+        self.day = day
+    #endregion
+
+    def __str__(self) -> str:
+        return f"{self.year}-{self.month}-{self.day}"
+
 def cordinates_to_string() -> str | None:
     """
     Asks for a longitude and latitude from the user and returns them as a formatted string.
