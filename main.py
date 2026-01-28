@@ -321,30 +321,29 @@ def load_environment_variables(file_path: str = ".env"):
     finally:
         print(ConsolColor.PreSetUpColoredTextLine(f"{file_path} file loading attempt completed.","s_color"))
 
-def fetch_api_url() -> str:
-    """
-    Fetches the API URL from environment variables.
+def load_env_variable(variable_name: str) -> str:
+    print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment variables: {variable_name}", "i_tips"))
+    env_variable: str
+    try:
+        env_variable = str(os.getenv(variable_name))
 
-    Returns:
-        str: The API URL.
-    """
-    return f"{os.getenv('API_URL')}"
+    except:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} could not load please make sure that the name is correct.","danger"))
+        return ""
 
-def fetch_api_key() -> str:
-    """
-    Fetches the API key from environment variables.
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} could load.","success"))
+        return env_variable
 
-    Returns:
-        str: The API key.
-    """
-    return f"{os.getenv('API_KEY')}"
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} variable loading attempt completed.","s_color"))
 
 def fetch_api() -> dict:
     """
     Fetches data from the API based on user input and environment variables.
     """
     load_environment_variables()
-    url: str = f"{fetch_api_url()}/?key={fetch_api_key()}&include=days&unitGroup=&elements="
+    url: str = f"/?key=&include=days&unitGroup=&elements="
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
