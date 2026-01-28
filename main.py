@@ -222,88 +222,30 @@ def ask_for_cordinate() -> coordinate | None:
     finally:
         print(ConsolColor.PreSetUpColoredTextLine("Cordinate input attempt completed.", "info"))
 
-def get_first_and_last_day_of_month(month: int, year: int) -> tuple:
-    """
-    Given a month and year, returns the first and last day of that month.
+@timer
+def ask_for_date() -> date | None:
+    try:
+        year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter year (e.g., 2026): ", "s_color")))
+        month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter month (1-12): ", "s_color")))
+        day: int = int(input(ConsolColor.PreSetUpColoredTextLine(f"Enter day (1-{calendar.monthrange(year, month)[1]}): ", "s_color")))
 
-    Args:
-        month (int): The month as an integer (1-12).
-        year (int): The year as a four-digit integer.
+        if month < 1 or month > 12:
+            raise ValueError("Month must be between 1 and 12.")
 
-    Returns:
-        tuple: A tuple containing the first and last day of the month.
-    """
-    first_day:int = 1
-    last_day = calendar.monthrange(year, month)[1]
-    return (first_day, last_day)
+        if day < 1 or day > calendar.monthrange(year, month)[1]:
+            raise ValueError(f"Day must be between 1 and {calendar.monthrange(year, month)[1]} for month {month}.")
 
-def get_date_string() -> str | None:
-    """
-    Asks the user for a month and year, then returns a date string in the format YYYY-MM-DD to YYYY-MM-DD.
-    """
-    print(ConsolColor.PreSetUpColoredTextLine("How much data do you want to fetch in time?\n1)- A year\n2)- A month\n3)- A day\n4)- Year to year range\n5)- Month to month range\n6)- Day to day range", "s_color"))
-    while True:
-        option: int = int(input(ConsolColor.PreSetUpColoredTextLine("Choose an option (1-6): ", "info")))
-        match option:
-            case 1:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the year for which you want the data:", "s_color"))
-                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
-                start_date: str = f"{year}-01-01"
-                end_date: str = f"{year}-12-31"
-                return f"{start_date}/{end_date}"
+    except ValueError as ve:
+        print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
+        return None
 
-            case 2:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the month and year for which you want the data:", "s_color"))
-                month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Month (1-12): ", "info")))
-                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
-                if 1 <= month <= 12:
-                    first_day, last_day = get_first_and_last_day_of_month(month, year)
-                    start_date: str = f"{year}-{month:02d}-{first_day:02d}"
-                    end_date: str = f"{year}-{month:02d}-{last_day:02d}"
-                    return f"{start_date}/{end_date}"
-                else:
-                    print("Invalid month. Please enter a value between 1 and 12.")
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine("Date successfully created.", "success"))
+        return date(year, month, day)
 
-            case 3:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the date for which you want the data:", "s_color"))
-                year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Year (e.g., 2026): ", "info")))
-                month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Month (1-12): ", "info")))
-                day: int = int(input(ConsolColor.PreSetUpColoredTextLine("Day (1-31): ", "info")))
-                start_date: str = f"{year}-{month:02d}-{day:02d}"
-                return start_date
-            
-            case 4:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the year range for which you want the data:", "s_color"))
-                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
-                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
-                start_date: str = f"{start_year}-01-01"
-                end_date: str = f"{end_year}-12-31"
-                return f"{start_date}/{end_date}"
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine("Date input attempt completed.", "info"))
 
-            case 5:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the month range for which you want the data:", "s_color"))
-                start_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Month (1-12): ", "info")))
-                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
-                end_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Month (1-12): ", "info")))
-                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
-                start_date: str = f"{start_year}-{start_month:02d}-01"
-                end_date: str = f"{end_year}-{end_month:02d}-{get_first_and_last_day_of_month(end_month, end_year)[1]:02d}"
-                return f"{start_date}/{end_date}"
-
-            case 6:
-                print(ConsolColor.PreSetUpColoredTextLine("Enter the day range for which you want the data:", "s_color"))
-                start_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Year (e.g., 2026): ", "info")))
-                start_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Month (1-12): ", "info")))
-                start_day: int = int(input(ConsolColor.PreSetUpColoredTextLine("Start Day (1-31): ", "info")))
-                end_year: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Year (e.g., 2026): ", "info")))
-                end_month: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Month (1-12): ", "info")))
-                end_day: int = int(input(ConsolColor.PreSetUpColoredTextLine("End Day (1-31): ", "info")))
-                start_date: str = f"{start_year}-{start_month:02d}-{start_day:02d}"
-                end_date: str = f"{end_year}-{end_month:02d}-{end_day:02d}"
-                return f"{start_date}/{end_date}"
-
-            case _:
-                print(ConsolColor.PreSetUpColoredTextLine("Invalid option. Please choose a valid option (1-6).", "warning"))
 
 def load_environment_variables() -> None:
     """
@@ -380,7 +322,7 @@ def fetch_api() -> dict:
     Fetches data from the API based on user input and environment variables.
     """
     load_environment_variables()
-    url: str = f"{fetch_api_url()}/{get_date_string()}?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
+    url: str = f"{fetch_api_url()}/?key={fetch_api_key()}&include=days&unitGroup={get_unitGroup()}&elements={','.join(fecth_needed_infos())}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
