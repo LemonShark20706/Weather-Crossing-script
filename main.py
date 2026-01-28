@@ -439,32 +439,4 @@ def create_pdf_report(data: dict) -> None:
     pdf.output("weather_report.pdf")
     print("PDF report created successfully as 'weather_report.pdf'.")
 
-def main() -> None:
-    """
-    Main function to execute the program.
-    """
-    print(ConsolColor.PreSetUpColoredTextLine("Data fetching is in progress...", "s_color"))
-    data: dict = fetch_api()
-    print(ConsolColor.PreSetUpColoredTextLine("Data fetched and saved to 'weather_data_response.json'.", "s_color"))
-
-    print(ConsolColor.PreSetUpColoredTextLine("Do you want a report about the fetched data? (yes/no)", "s_color"))
-    report_choice: str = input(ConsolColor.PreSetUpColoredTextLine("?.: ", "info")).strip().lower()
-    if report_choice == "no":
-        print("Exiting the program.")
-        return
-
-    print(ConsolColor.PreSetUpColoredTextLine("Do you want the report in a PDF file? (yes/no)", "s_color"))
-    if input(ConsolColor.PreSetUpColoredTextLine("?.: ", "info")).strip().lower() == "yes":
-        create_pdf_report(data)
-
-    days_data: list[dict] = data.get("days", [])
-    os.system('cls')
-    for day in days_data:
-        print(ConsolColor.PreSetUpColoredTextLine(f"Date: {day.get('datetime', 'N/A')}", "s_color"))
-        for key, value in day.items():
-            if key != "datetime":
-                print(ConsolColor.PreSetUpColoredTextLine(f"  {key}: {value}", "i_tips"))
-        input(ConsolColor.PreSetUpColoredTextLine("\n\nPress Enter to continue to the next day...", "info"))
-        os.system('cls')
-
-main()
+create_json_log_file(fetch_api())
