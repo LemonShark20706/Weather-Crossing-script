@@ -306,11 +306,20 @@ def ask_for_weather_parameters():
     finally:
         print(ConsolColor.PreSetUpColoredTextLine("Weather parameters input attempt completed.", "info"))
 
-def load_environment_variables() -> None:
-    """
-    Loads environment variables from a .env file.
-    """
-    load_dotenv('.env')
+@timer
+def load_environment_variables(file_path: str = ".env"):
+    print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment file: {file_path}", "i_tips"))
+    try:
+        load_dotenv(file_path)
+
+    except Exception as e:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{file_path} could not load please make sure that the path is correct.","danger"))
+
+    else:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{file_path} could load the path is correct.","success"))
+
+    finally:
+        print(ConsolColor.PreSetUpColoredTextLine(f"{file_path} file loading attempt completed.","s_color"))
 
 def fetch_api_url() -> str:
     """
