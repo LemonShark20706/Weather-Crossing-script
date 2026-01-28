@@ -1,10 +1,11 @@
 from dotenv import load_dotenv
 from colorama import Style
+from fpdf import FPDF
 import requests
 import calendar
+import time
 import os
 
-from fpdf import FPDF
 
 class ConsolColor:
     @staticmethod
