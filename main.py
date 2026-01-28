@@ -356,14 +356,14 @@ def create_json_log_file(data: dict):
     finally:
         print(ConsolColor.PreSetUpColoredTextLine(f"weather_data_response.json file creating attempt completed.","s_color"))
 
-def fetch_api() -> dict:
-    """
-    Fetches data from the API based on user input and environment variables.
-    """
+@timer
+def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> dict:
     load_environment_variables()
-    url: str = f"/?key=&include=days&unitGroup=&elements="
+    url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_params)}"
+    print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
     response = requests.get(url)
     if response.status_code == 200:
+        print(ConsolColor.PreSetUpColoredTextLine(f"API responded successfully.", "success"))
         return response.json()
     else:
         raise Exception(ConsolColor.PreSetUpColoredTextLine(f"API request failed with status code {response.status_code}", "danger"))
@@ -445,7 +445,6 @@ def main() -> None:
     """
     print(ConsolColor.PreSetUpColoredTextLine("Data fetching is in progress...", "s_color"))
     data: dict = fetch_api()
-    create_file_with_data(data)
     print(ConsolColor.PreSetUpColoredTextLine("Data fetched and saved to 'weather_data_response.json'.", "s_color"))
 
     print(ConsolColor.PreSetUpColoredTextLine("Do you want a report about the fetched data? (yes/no)", "s_color"))
