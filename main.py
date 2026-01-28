@@ -47,6 +47,7 @@ class ConsolColor:
             `p_error` -> `possible_error` -> This colored message can lead to errors.
             `warning` -> `warning` -> This colored message is a warning.
             `danger` -> `danger` -> This colored message is a danger.
+            `success` -> `success` -> This color means that the task went good.
             `info` -> `information` -> This colored message is an information.
         """
 
@@ -66,6 +67,8 @@ class ConsolColor:
                 Color = f"\x1b[38;2;255;100;0m"
             case "danger":
                 Color = f"\x1b[38;2;255;0;0m"
+            case "success":
+                Color = f"\x1b[38;2;0;255;0m"
             case "info":
                 Color = f"\x1b[38;2;0;0;255m"
 
@@ -126,7 +129,7 @@ class ConsolColor:
             str: The end of colored text.
         """
         finalColorEnd = f"{Style.RESET_ALL}"
-        return finalColorEnd    
+        return finalColorEnd   
 
 def cordinates_to_string() -> str | None:
     """
