@@ -306,33 +306,24 @@ def load_env_variable(variable_name: str):
 
 @timer
 @try_tester
-def create_json_log_file(data: dict):
+def create_json_log_file(data):
     print(ConsolColor.PreSetUpColoredTextLine(f"Creating .json file for logging.", "i_tips"))
 
     with open("weather_data_response.json", "w") as file:
         file.write(str(data).replace('\'', '"'))
 
 @timer
-def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> dict:
+def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()):
     load_environment_file()
     url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_params)}"
     print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
-    try:
-        response = requests.get(url)
+    
+    response = requests.get(url)
 
-        if response.status_code != 200:
-            raise Exception(f"API request failed with status code {response.status_code}")
+    if response.status_code != 200:
+        raise Exception(f"API request failed with status code {response.status_code}")
 
-    except Exception as e:
-        print(ConsolColor.PreSetUpColoredTextLine(f"API request failed: {e}", "danger"))
-        return {}
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine(f"API responded successfully.", "success"))
-        return response.json()
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine(f"API request attempt completed.","s_color"))
+    return response
 
 def main():
     while True:
