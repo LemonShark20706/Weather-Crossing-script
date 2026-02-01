@@ -305,21 +305,12 @@ def load_env_variable(variable_name: str):
     return env_variable
 
 @timer
+@try_tester
 def create_json_log_file(data: dict):
     print(ConsolColor.PreSetUpColoredTextLine(f"Creating .json file for logging.", "i_tips"))
 
-    try:
-        with open("weather_data_response.json", "w") as file:
-            file.write(str(data).replace('\'', '"'))
-    
-    except Exception as e:
-        print(ConsolColor.PreSetUpColoredTextLine(f"File had problem: {e}","danger"))
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine(f"File created successfully.", "success"))
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine(f"weather_data_response.json file creating attempt completed.","s_color"))
+    with open("weather_data_response.json", "w") as file:
+        file.write(str(data).replace('\'', '"'))
 
 @timer
 def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> dict:
