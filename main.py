@@ -218,7 +218,7 @@ def try_tester(func):
 
 @timer
 @try_tester
-def ask_for_cordinate() -> coordinate | None:
+def ask_for_cordinate() -> coordinate:
     lon: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter longitude: ", "s_color")))
     lat: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter latitude: ", "s_color")))
 
@@ -226,7 +226,7 @@ def ask_for_cordinate() -> coordinate | None:
 
 @timer
 @try_tester
-def ask_for_date() -> date | None:
+def ask_for_date() -> date:
     year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter year (e.g., 2026): ", "s_color")))
     month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter month (1-12): ", "s_color")))
     day: int = int(input(ConsolColor.PreSetUpColoredTextLine(f"Enter day (1-{calendar.monthrange(year, month)[1]}): ", "s_color")))
@@ -241,7 +241,7 @@ def ask_for_date() -> date | None:
 
 @timer
 @try_tester
-def ask_for_unitGroup():
+def ask_for_unitGroup() -> str:
     unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "s_color")).strip().lower()
 
     if unit_group not in ["metric", "imperial"]:
@@ -250,7 +250,7 @@ def ask_for_unitGroup():
     return unit_group
 
 @timer
-def ask_for_weather_parameters():
+def ask_for_weather_parameters() -> list[str] | None:
     option_list: list[str] = ["datetime","temp","tempmax","tempmin","dew","humidity","precip","windgust","windspeed","cloudcover","solarradiation","solarenergy","uvindex","visibility"]
     print(ConsolColor.PreSetUpColoredTextLine("What do you need from the list:", "s_color"))
     for optionIndex in range(len(option_list)):
@@ -268,7 +268,7 @@ def ask_for_weather_parameters():
             raise ValueError("Parameters is empty.")
     except ValueError as ve:
         print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
-        return [""]
+        return None
 
     else:
         try:
@@ -281,7 +281,7 @@ def ask_for_weather_parameters():
                     raise ValueError("Invalid input. Please enter valid option numbers separated by commas, 'all', or press enter to leave:")
         except ValueError as ve:
             print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "warning"))
-            return [""]
+            return None
         
         else:
             print(ConsolColor.PreSetUpColoredTextLine(f"Successful Weather parameters selection. ({user_input})", "success"))
@@ -299,7 +299,7 @@ def load_environment_file(file_path: str = ".env"):
 
 @timer
 @try_tester
-def load_env_variable(variable_name: str):
+def load_env_variable(variable_name: str) -> str:
     print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment variables: {variable_name}", "i_tips"))
     env_variable: str = str(os.getenv(variable_name))
 
