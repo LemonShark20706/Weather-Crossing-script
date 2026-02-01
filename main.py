@@ -197,6 +197,24 @@ def timer(func):
         return result
     return wrapper
 
+def try_tester(func):
+    def wrapper(*args, **kwargs):
+        print(ConsolColor.PreSetUpColoredTextLine("Operation starting", "s_color"))
+        try:
+            resoult = func(*args, **kwargs)
+
+        except Exception as e:
+            print(ConsolColor.PreSetUpColoredTextLine(f"Invalid operation: {e}", "danger"))
+
+        else:
+            print(ConsolColor.PreSetUpColoredTextLine(f"Successful operation is done", "success"))
+
+            return resoult
+
+        finally:
+            print(ConsolColor.PreSetUpColoredTextLine("Operation ended.", "info"))
+    return wrapper
+
 @timer
 def ask_for_cordinate() -> coordinate | None:
     try:
