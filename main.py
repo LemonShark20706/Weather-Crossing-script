@@ -224,28 +224,19 @@ def ask_for_cordinate() -> coordinate | None:
     return coordinate(lon, lat)
 
 @timer
+@try_tester
 def ask_for_date() -> date | None:
-    try:
-        year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter year (e.g., 2026): ", "s_color")))
-        month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter month (1-12): ", "s_color")))
-        day: int = int(input(ConsolColor.PreSetUpColoredTextLine(f"Enter day (1-{calendar.monthrange(year, month)[1]}): ", "s_color")))
+    year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter year (e.g., 2026): ", "s_color")))
+    month: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter month (1-12): ", "s_color")))
+    day: int = int(input(ConsolColor.PreSetUpColoredTextLine(f"Enter day (1-{calendar.monthrange(year, month)[1]}): ", "s_color")))
 
-        if month < 1 or month > 12:
-            raise ValueError("Month must be between 1 and 12.")
+    if month < 1 or month > 12:
+        raise ValueError("Month must be between 1 and 12.")
 
-        if day < 1 or day > calendar.monthrange(year, month)[1]:
-            raise ValueError(f"Day must be between 1 and {calendar.monthrange(year, month)[1]} for month {month}.")
+    if day < 1 or day > calendar.monthrange(year, month)[1]:
+        raise ValueError(f"Day must be between 1 and {calendar.monthrange(year, month)[1]} for month {month}.")
 
-    except ValueError as ve:
-        print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
-        return None
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine("Date successfully created.", "success"))
-        return date(year, month, day)
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine("Date input attempt completed.", "info"))
+    return date(year, month, day)
 
 @timer
 def ask_for_unitGroup():
