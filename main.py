@@ -291,7 +291,7 @@ def ask_for_weather_parameters():
 
 @timer
 @try_tester
-def load_environment_variables(file_path: str = ".env"):
+def load_environment_file(file_path: str = ".env"):
     print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment file: {file_path}", "i_tips"))
 
     load_dotenv(file_path)
@@ -333,7 +333,7 @@ def create_json_log_file(data: dict):
 
 @timer
 def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> dict:
-    load_environment_variables()
+    load_environment_file()
     url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_params)}"
     print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
     try:
