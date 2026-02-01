@@ -297,22 +297,12 @@ def load_environment_file(file_path: str = ".env"):
     load_dotenv(file_path)
 
 @timer
-def load_env_variable(variable_name: str) -> str:
+@try_tester
+def load_env_variable(variable_name: str):
     print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment variables: {variable_name}", "i_tips"))
-    env_variable: str
-    try:
-        env_variable = str(os.getenv(variable_name))
+    env_variable: str = str(os.getenv(variable_name))
 
-    except:
-        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} could not load please make sure that the name is correct.","danger"))
-        return ""
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} could load.","success"))
-        return env_variable
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine(f"{variable_name} variable loading attempt completed.","s_color"))
+    return env_variable
 
 @timer
 def create_json_log_file(data: dict):
