@@ -133,34 +133,27 @@ class ConsolColor:
 
 class coordinate:
     def __init__(self, longitude: float, latitude: float) -> None:
-        self.x: float = longitude
-        self.y: float = latitude
-    
-    #region getters
-    def get_full_cordinate(self) -> tuple[float, float]:
-        return (self.x, self.y)
+        self._x: float = longitude
+        self._y: float = latitude
 
-    def get_longitude(self) -> float:
-        return self.x
-    
-    def get_latitude(self) -> float:
-        return self.y
-    #endregion
+    @property
+    def longitude(self) -> float:
+        return self._x
 
-    #region setters
-    def set_longitude(self, longitude: float) -> None:
-        self.x = longitude
-    
-    def set_latitude(self, latitude: float) -> None:
-        self.y = latitude
-    
-    def set_cordinate(self, longitude: float, latitude: float) -> None:
-        self.x = longitude
-        self.y = latitude
-    #endregion
+    @longitude.setter
+    def longitude(self, value: float):
+        self._x = value
+
+    @property
+    def latitude(self) -> float:
+        return self._y
+
+    @latitude.setter
+    def latitude(self, value: float):
+        self._y = value
 
     def __str__(self) -> str:
-        return f"{self.x},{self.y}"
+        return f"{self._x},{self._y}"
 
 class date:
     def __init__(self, year: int, month: int, day: int) -> None:
