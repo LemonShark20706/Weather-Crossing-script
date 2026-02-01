@@ -205,6 +205,7 @@ def try_tester(func):
 
         except Exception as e:
             print(ConsolColor.PreSetUpColoredTextLine(f"Invalid operation: {e}", "danger"))
+            return None
 
         else:
             print(ConsolColor.PreSetUpColoredTextLine(f"Successful operation is done", "success"))
