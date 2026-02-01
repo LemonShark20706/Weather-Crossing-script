@@ -336,7 +336,7 @@ def fetch_api():
     if response.status_code != 200:
         raise Exception(f"API request failed with status code {response.status_code}")
 
-    return response
+    return response.json()
 
 def main():
     while True:
