@@ -216,21 +216,12 @@ def try_tester(func):
     return wrapper
 
 @timer
+@try_tester
 def ask_for_cordinate() -> coordinate | None:
-    try:
-        lon: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter longitude: ", "s_color")))
-        lat: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter latitude: ", "s_color")))
+    lon: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter longitude: ", "s_color")))
+    lat: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter latitude: ", "s_color")))
 
-    except ValueError:
-        print(ConsolColor.PreSetUpColoredTextLine("Invalid input. Please enter numeric values for longitude and latitude.", "danger"))
-        return None
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine("Cordinate successfully created.", "success"))
-        return coordinate(lon, lat)
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine("Cordinate input attempt completed.", "info"))
+    return coordinate(lon, lat)
 
 @timer
 def ask_for_date() -> date | None:
