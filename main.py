@@ -325,6 +325,7 @@ def api_url(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_d
     return url
 
 @timer
+@try_tester
 def fetch_api():
     load_environment_file()
     url: str = api_url()
