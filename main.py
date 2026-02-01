@@ -6,7 +6,6 @@ import calendar
 import time
 import os
 
-
 class ConsolColor:
     @staticmethod
     def CustomColoredText(text : str, r : int, g : int, b : int) -> str:
@@ -299,7 +298,7 @@ def load_environment_file(file_path: str = ".env"):
 
 @timer
 @try_tester
-def load_env_variable(variable_name: str) -> str:
+def load_env_variable(variable_name: str) -> str | None:
     print(ConsolColor.PreSetUpColoredTextLine(f"Loading environment variables: {variable_name}", "i_tips"))
     env_variable: str = str(os.getenv(variable_name))
 
@@ -314,9 +313,21 @@ def create_json_log_file(data):
         file.write(str(data).replace('\'', '"'))
 
 @timer
-def fetch_api(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()):
+@try_tester
+def api_url(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> str:
+    if ask_for_weather_parameters is None:
+        raise ValueError("Wrong type of data.")
+
+    weather_param: list[str] | str = weather_params if weather_params is not None else ""
+
+    url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_param)}"
+    
+    return url
+
+@timer
+def fetch_api():
     load_environment_file()
-    url: str = f"{load_env_variable("API_URL")}{cordinates}/{start_date}/{end_date}?key={load_env_variable("API_KEY")}&include=days&unitGroup={unit_group}&elements={','.join(weather_params)}"
+    url: str = api_url()
     print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
     
     response = requests.get(url)
