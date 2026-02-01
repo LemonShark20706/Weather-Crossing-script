@@ -239,23 +239,14 @@ def ask_for_date() -> date | None:
     return date(year, month, day)
 
 @timer
+@try_tester
 def ask_for_unitGroup():
-    try:
-        unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "s_color")).strip().lower()
+    unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "s_color")).strip().lower()
 
-        if unit_group not in ["metric", "imperial"]:
-            raise ValueError("Unit group must be metric or imperial.")
-
-    except ValueError as ve:
-        print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
-        return None
-
-    else:
-        print(ConsolColor.PreSetUpColoredTextLine("Unit group is successfully created.", "success"))
-        return unit_group
-
-    finally:
-        print(ConsolColor.PreSetUpColoredTextLine("Unit group input attempt completed.", "info"))
+    if unit_group not in ["metric", "imperial"]:
+        raise ValueError("Unit group must be metric or imperial.")
+    
+    return unit_group
 
 @timer
 def ask_for_weather_parameters():
