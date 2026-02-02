@@ -215,7 +215,6 @@ def try_tester(func):
             print(ConsolColor.PreSetUpColoredTextLine("Operation ended.", "info"))
     return wrapper
 
-@timer
 @try_tester
 def ask_for_cordinate() -> coordinate:
     lon: float = float(input(ConsolColor.PreSetUpColoredTextLine("Enter longitude: ", "s_color")))
@@ -223,7 +222,6 @@ def ask_for_cordinate() -> coordinate:
 
     return coordinate(lon, lat)
 
-@timer
 @try_tester
 def ask_for_date() -> date:
     year: int = int(input(ConsolColor.PreSetUpColoredTextLine("Enter year (e.g., 2026): ", "s_color")))
@@ -238,7 +236,6 @@ def ask_for_date() -> date:
 
     return date(year, month, day)
 
-@timer
 @try_tester
 def ask_for_unitGroup() -> str:
     unit_group: str = input(ConsolColor.PreSetUpColoredTextLine("Enter the unit group (metric/imperial): ", "s_color")).strip().lower()
@@ -248,7 +245,6 @@ def ask_for_unitGroup() -> str:
     
     return unit_group
 
-@timer
 def ask_for_weather_parameters() -> list[str] | None:
     option_list: list[str] = ["datetime","temp","tempmax","tempmin","dew","humidity","precip","windgust","windspeed","cloudcover","solarradiation","solarenergy","uvindex","visibility"]
     print(ConsolColor.PreSetUpColoredTextLine("What do you need from the list:", "s_color"))
