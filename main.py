@@ -275,7 +275,7 @@ def ask_for_weather_parameters() -> list[str] | None:
                 else:
                     raise ValueError("Invalid input. Please enter valid option numbers separated by commas, 'all', or press enter to leave:")
         except ValueError as ve:
-            print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "warning"))
+            print(ConsolColor.PreSetUpColoredTextLine(f"Invalid input: {ve}", "danger"))
             return None
         
         else:
@@ -311,8 +311,11 @@ def create_json_log_file(data):
 @timer
 @try_tester
 def api_url(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_date = ask_for_date(), unit_group = ask_for_unitGroup(), weather_params = ask_for_weather_parameters()) -> str:
-    if ask_for_weather_parameters is None:
-        raise ValueError("Wrong type of data.")
+    
+    parameters: list = [cordinates, start_date, end_date, unit_group, weather_params]
+    for i in parameters:
+        if i is None:
+            raise ValueError("Wrong input type")
 
     weather_param: list[str] | str = weather_params if weather_params is not None else ""
 
@@ -325,6 +328,10 @@ def api_url(cordinates = ask_for_cordinate(), start_date = ask_for_date(), end_d
 def fetch_api():
     load_environment_file()
     url: str = api_url()
+    
+    if url is None:
+        raise ValueError("Wrong url content")
+
     print(ConsolColor.PreSetUpColoredTextLine(f"Asking the API for data.", "i_tips"))
     
     response = requests.get(url)
